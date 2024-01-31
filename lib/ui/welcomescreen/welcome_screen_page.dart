@@ -62,7 +62,7 @@ class WelcomeScreenPage extends StatelessWidget {
           // color: Colors.yellow,
           child: Text(
             textAlign: TextAlign.center,
-            'Chào mừng đến với ứng dụng Task ToDo',
+            'Chào mừng đến với ứng dụng Chat',
             style: TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.bold,
