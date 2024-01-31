@@ -5,7 +5,7 @@ import 'package:myflutter/ui/splash/splash.dart';
 
 //runapp de khoi dong app
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: OnboardingPageView(),
     debugShowCheckedModeBanner: false,
   ));
