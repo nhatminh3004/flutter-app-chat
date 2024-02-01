@@ -1,12 +1,27 @@
 // import thu vien
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:myflutter/ui/onboarding/onboarding_page_view.dart';
 import 'package:myflutter/ui/splash/splash.dart';
+import 'package:device_preview/device_preview.dart';
 
 //runapp de khoi dong app
-void main() {
-  runApp(const MaterialApp(
-    home: OnboardingPageView(),
-    debugShowCheckedModeBanner: false,
-  ));
+void main() => runApp(
+      DevicePreview(
+        enabled: !kReleaseMode,
+        builder: (context) => MyApp(), // Wrap your app
+      ),
+    );
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      useInheritedMediaQuery: true,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
+      home: OnboardingPageView(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
 }

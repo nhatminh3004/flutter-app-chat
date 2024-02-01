@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class WelcomeScreenPage extends StatelessWidget {
   final VoidCallback backPressed;
@@ -6,14 +7,15 @@ class WelcomeScreenPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: const Color(0xFF121212),
-        body: SingleChildScrollView(
+    return Scaffold(
+      backgroundColor: const Color(0xFF8E97FD),
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Container(
             // color: Colors.red,
             child: Column(
               children: [
+                SvgPicture.asset('assets/images/ic_logo.svg'),
                 _buildBackButton(),
                 SizedBox(
                   height: 58,

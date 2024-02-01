@@ -16,10 +16,10 @@ class OnboardingChildPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: const Color(0xFF121212),
-        body: Container(
+    return Scaffold(
+      backgroundColor: const Color(0xFF121212),
+      body: SafeArea(
+        child: Container(
           // color: Colors.red,
           child: SingleChildScrollView(
             child: Column(
