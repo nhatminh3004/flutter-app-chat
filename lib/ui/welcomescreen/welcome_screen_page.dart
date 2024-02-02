@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class WelcomeScreenPage extends StatelessWidget {
   final VoidCallback backPressed;
@@ -145,17 +146,20 @@ class WelcomeBackgoundWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // color: Colors.yellow,
       child: Align(
           alignment: Alignment.bottomCenter,
-          child: FractionallySizedBox(
-              heightFactor: 0.5,
-              widthFactor: 1,
-              child: Container(
-                // color: Colors.red,
-                child: FittedBox(
-                    fit: BoxFit.cover,
-                    child: SvgPicture.asset('assets/images/bg_welcome.svg')),
-              ))),
+          child: Container(
+            child: FractionallySizedBox(
+                heightFactor: 0.4,
+                widthFactor: 1,
+                child: Container(
+                  // color: Colors.red,
+                  child: FittedBox(
+                      fit: BoxFit.cover,
+                      child: SvgPicture.asset('assets/images/bg_welcome.svg')),
+                )),
+          )),
     );
   }
 }
@@ -171,52 +175,76 @@ class WelcomeContentWidget extends StatelessWidget {
       // color: Colors.yellow,
       child: FractionallySizedBox(
         widthFactor: 1,
-        heightFactor: 0.5,
+        heightFactor: 0.4,
         child: Container(
           // color: Colors.red,
           child: Column(
             children: [
               // _buildBackButton(),
-              Expanded(
-                  flex: 1,
-                  child: SvgPicture.asset(
-                    'assets/images/ic_logo.svg',
-                    alignment: Alignment.topCenter,
-                  )),
-              Expanded(
-                  flex: 3,
-                  child: Column(
-                    children: [
-                      Text(
-                        textAlign: TextAlign.center,
-                        'Xin chào bạn, Chào mừng',
-                        style: TextStyle(
-                          fontFamily: 'Poppins-Bold',
-                          fontSize: 30,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFFFFECCC),
+              Flexible(
+                flex: 2,
+                fit: FlexFit.tight,
+                child: SvgPicture.asset(
+                  'assets/images/ic_logo.svg',
+                  alignment: Alignment.topCenter,
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                fit: FlexFit.tight,
+                child: Container(
+                  // color: Colors.red,
+                  child: FittedBox(
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: const TextSpan(
+                          text: 'Xin chào bạn, Chào mừng \n',
+                          style: TextStyle(
+                            fontFamily: 'Minh',
+                            fontSize: 30,
+                            fontWeight: FontWeight.w900,
+                            color: Color(0xFFFFECCC),
+                            height: 1.3,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: 'Bạn đã trở lại',
+                              style: TextStyle(
+                                  fontFamily: 'Minh',
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ]),
+                    ),
+                  ),
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                fit: FlexFit.tight,
+                child: Container(
+                  // color: Colors.red,
+                  child: FractionallySizedBox(
+                    widthFactor: 0.8,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: FittedBox(
+                        child: Text(
+                          textAlign: TextAlign.center,
+                          'Hãy ấn bắt đầu để tiến hành đăng nhập\nNếu chưa có tài khoản '
+                          'hãy nhanh tay ấn đăng ký',
+                          style: TextStyle(
+                              height: 1.5,
+                              fontFamily: 'Minh',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w300,
+                              color: Color(0xFFEBEAEC)),
                         ),
                       ),
-                      Text(
-                        textAlign: TextAlign.center,
-                        'Bạn đã trở lại',
-                        style: TextStyle(
-                            fontFamily: 'Poppins-Bold',
-                            fontSize: 30,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      Text(
-                        textAlign: TextAlign.center,
-                        'Hãy ấn bắt đầu để tiến hành đăng nhập, Nếu chưa có tài khoản '
-                        'hãy nhanh tay ấn đăng ký',
-                        style: TextStyle(
-                            fontFamily: 'Poppins-Bold',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFFEBEAEC)),
-                      ),
-                    ],
-                  ))
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
