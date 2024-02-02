@@ -7,29 +7,23 @@ class WelcomeScreenPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final orirentation = MediaQuery.of(context).orientation;
     return Scaffold(
       backgroundColor: const Color(0xFF8E97FD),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            // color: Colors.red,
-            child: Column(
-              children: [
-                SvgPicture.asset('assets/images/ic_logo.svg'),
-                _buildBackButton(),
-                SizedBox(
-                  height: 58,
-                ),
-                _buildTitleAndContent(),
-                SizedBox(
-                  height: 370,
-                ),
-                _buildButton(),
-              ],
-            ),
-          ),
-        ),
-      ),
+          child: orirentation == Orientation.portrait
+              ? const Stack(
+                  children: [
+                    WelcomeBackgoundWidget(),
+                    WelcomeContentWidget(),
+                  ],
+                )
+              : const Row(
+                  children: [
+                    Expanded(child: WelcomeContentWidget()),
+                    Expanded(child: WelcomeBackgoundWidget()),
+                  ],
+                )),
     );
   }
 
@@ -138,6 +132,94 @@ class WelcomeScreenPage extends StatelessWidget {
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class WelcomeBackgoundWidget extends StatelessWidget {
+  const WelcomeBackgoundWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Align(
+          alignment: Alignment.bottomCenter,
+          child: FractionallySizedBox(
+              heightFactor: 0.5,
+              widthFactor: 1,
+              child: Container(
+                // color: Colors.red,
+                child: FittedBox(
+                    fit: BoxFit.cover,
+                    child: SvgPicture.asset('assets/images/bg_welcome.svg')),
+              ))),
+    );
+  }
+}
+
+class WelcomeContentWidget extends StatelessWidget {
+  const WelcomeContentWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // color: Colors.yellow,
+      child: FractionallySizedBox(
+        widthFactor: 1,
+        heightFactor: 0.5,
+        child: Container(
+          // color: Colors.red,
+          child: Column(
+            children: [
+              // _buildBackButton(),
+              Expanded(
+                  flex: 1,
+                  child: SvgPicture.asset(
+                    'assets/images/ic_logo.svg',
+                    alignment: Alignment.topCenter,
+                  )),
+              Expanded(
+                  flex: 3,
+                  child: Column(
+                    children: [
+                      Text(
+                        textAlign: TextAlign.center,
+                        'Xin chào bạn, Chào mừng',
+                        style: TextStyle(
+                          fontFamily: 'Poppins-Bold',
+                          fontSize: 30,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFFFFECCC),
+                        ),
+                      ),
+                      Text(
+                        textAlign: TextAlign.center,
+                        'Bạn đã trở lại',
+                        style: TextStyle(
+                            fontFamily: 'Poppins-Bold',
+                            fontSize: 30,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        textAlign: TextAlign.center,
+                        'Hãy ấn bắt đầu để tiến hành đăng nhập, Nếu chưa có tài khoản '
+                        'hãy nhanh tay ấn đăng ký',
+                        style: TextStyle(
+                            fontFamily: 'Poppins-Bold',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFFEBEAEC)),
+                      ),
+                    ],
+                  ))
+            ],
+          ),
+        ),
       ),
     );
   }
