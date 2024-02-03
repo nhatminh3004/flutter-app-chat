@@ -1,5 +1,6 @@
 //class cha có vai trò quản lý các class con , di chuyển qua lại các class con
 import 'package:flutter/material.dart';
+import 'package:myflutter/ui/loginscreen/login_screen_page.dart';
 import 'package:myflutter/ui/onboarding/onboarding_child_page.dart';
 import 'package:myflutter/ui/welcomescreen/welcome_screen_page.dart';
 
@@ -60,9 +61,10 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
           ),
           WelcomeScreenPage(
             backPressed: () {
-              _pageController.jumpToPage(0);
+              _pageController.jumpToPage(4);
             },
-          )
+          ),
+          LoginScreenPage(),
         ],
       ),
     );
