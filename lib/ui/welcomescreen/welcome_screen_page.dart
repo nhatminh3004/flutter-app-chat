@@ -4,136 +4,60 @@ import 'package:google_fonts/google_fonts.dart';
 
 class WelcomeScreenPage extends StatelessWidget {
   final VoidCallback backPressed;
-  const WelcomeScreenPage({super.key, required this.backPressed});
+  final VoidCallback getStartedPressed;
+  const WelcomeScreenPage(
+      {super.key, required this.backPressed, required this.getStartedPressed});
 
   @override
   Widget build(BuildContext context) {
     final orirentation = MediaQuery.of(context).orientation;
+    final sizeManhinh = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: const Color(0xFF8E97FD),
       body: SafeArea(
           child: orirentation == Orientation.portrait
-              ? const Stack(
+              ? Stack(
                   children: [
                     WelcomeBackgoundWidget(),
-                    WelcomeContentWidget(),
+                    WelcomeContentWidget(
+                      backPressed: () {
+                        backPressed();
+                      },
+                    ),
+                    Align(
+                      alignment:
+                          Alignment(0.0, sizeManhinh.width > 800 ? -0.2 : 0.9),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            foregroundColor: Color(0xFF3F414E),
+                            backgroundColor: Color(0xFFEBEAEC),
+                            fixedSize: Size(sizeManhinh.width * 0.8,
+                                sizeManhinh.height * 0.065),
+                            elevation: 12,
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadiusDirectional.circular(38))),
+                        onPressed: () {
+                          getStartedPressed();
+                        },
+                        child: Text(
+                          'GET STARTED',
+                          style:
+                              TextStyle(fontSize: sizeManhinh.height * 0.015),
+                        ),
+                      ),
+                    )
                   ],
                 )
-              : const Row(
+              : Row(
                   children: [
-                    Expanded(child: WelcomeContentWidget()),
+                    Expanded(
+                        child: WelcomeContentWidget(
+                      backPressed: () {},
+                    )),
                     Expanded(child: WelcomeBackgoundWidget()),
                   ],
                 )),
-    );
-  }
-
-  Widget _buildBackButton() {
-    return Container(
-      margin: EdgeInsets.only(
-        top: 24,
-        left: 13,
-      ),
-      // color: Colors.white,
-      child: Row(
-        children: [
-          IconButton(
-            onPressed: () {
-              backPressed();
-            },
-            icon: Icon(
-              Icons.arrow_back_ios_new,
-              size: 24,
-              color: Colors.white,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTitleAndContent() {
-    return Column(
-      children: [
-        Container(
-          // color: Colors.yellow,
-          child: Text(
-            textAlign: TextAlign.center,
-            'Chào mừng đến với ứng dụng Chat',
-            style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFFFFFFFF).withOpacity(0.87),
-            ),
-          ),
-        ),
-        Container(
-          // color: Colors.black38,
-          margin: EdgeInsets.only(top: 26, left: 44, right: 44),
-          child: Text(
-            textAlign: TextAlign.center,
-            'Vui lòng đăng nhập để sử dụng ứng dụng nếu có tài khoản '
-            'hoặc đăng ký nếu chưa có tài khoản',
-            style: TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: 16,
-              color: const Color(0xFFFFFFFF).withOpacity(0.67),
-            ),
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget _buildButton() {
-    return Container(
-      margin: EdgeInsets.only(
-        bottom: 50,
-      ),
-      // color: Colors.white30,
-      child: Column(
-        children: [
-          Container(
-            // color: Colors.orange,
-            child: ElevatedButton(
-              onPressed: () {},
-              child: Text(
-                'Đăng nhập',
-              ),
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                minimumSize: Size(327, 48),
-                foregroundColor: Colors.white,
-                backgroundColor: Color(0xFF8875FF),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 28,
-          ),
-          Container(
-            // color: Colors.orange,
-            child: OutlinedButton(
-              onPressed: () {},
-              child: Text(
-                'Đăng ký',
-              ),
-              style: OutlinedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  side: BorderSide(
-                    color: Color(0xFF8875FF),
-                    width: 3,
-                  ),
-                  minimumSize: Size(327, 48),
-                  foregroundColor: Colors.white),
-            ),
-          )
-        ],
-      ),
     );
   }
 }
@@ -145,18 +69,21 @@ class WelcomeBackgoundWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final orientatiton = MediaQuery.of(context).orientation;
     return Container(
       // color: Colors.yellow,
       child: Align(
           alignment: Alignment.bottomCenter,
           child: Container(
             child: FractionallySizedBox(
-                heightFactor: 0.4,
+                heightFactor: orientatiton == Orientation.landscape ? 1 : 0.7,
                 widthFactor: 1,
                 child: Container(
                   // color: Colors.red,
                   child: FittedBox(
+                      // clipBehavior: Clip.antiAlias,
                       fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
                       child: SvgPicture.asset('assets/images/bg_welcome.svg')),
                 )),
           )),
@@ -165,88 +92,110 @@ class WelcomeBackgoundWidget extends StatelessWidget {
 }
 
 class WelcomeContentWidget extends StatelessWidget {
+  final VoidCallback backPressed;
+
   const WelcomeContentWidget({
     super.key,
+    required this.backPressed,
   });
 
   @override
   Widget build(BuildContext context) {
+    final sizeManhinh = MediaQuery.of(context).size;
     return Container(
       // color: Colors.yellow,
       child: FractionallySizedBox(
         widthFactor: 1,
         heightFactor: 0.4,
-        child: Container(
-          // color: Colors.red,
-          child: Column(
-            children: [
-              // _buildBackButton(),
-              Flexible(
-                flex: 2,
-                fit: FlexFit.tight,
-                child: SvgPicture.asset(
-                  'assets/images/ic_logo.svg',
-                  alignment: Alignment.topCenter,
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                fit: FlexFit.tight,
-                child: Container(
-                  // color: Colors.red,
-                  child: FittedBox(
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: const TextSpan(
-                          text: 'Xin chào bạn, Chào mừng \n',
-                          style: TextStyle(
-                            fontFamily: 'Minh',
-                            fontSize: 30,
-                            fontWeight: FontWeight.w900,
-                            color: Color(0xFFFFECCC),
-                            height: 1.3,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: 'Bạn đã trở lại',
-                              style: TextStyle(
-                                  fontFamily: 'Minh',
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ]),
+        child: Column(
+          children: [
+            // _buildBackButton(),
+            Flexible(
+              flex: 1,
+              fit: FlexFit.tight,
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: sizeManhinh.width * 0.024),
+                    // color: Colors.red,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: IconButton(
+                        onPressed: () {
+                          backPressed();
+                        },
+                        icon: Icon(
+                          Icons.arrow_back_ios_new,
+                          size: 24,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
+                  ),
+                  SvgPicture.asset(
+                    'assets/images/ic_logo.svg',
+                    alignment: Alignment.topCenter,
+                  )
+                ],
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              fit: FlexFit.tight,
+              child: Container(
+                // color: Colors.red,
+                child: FittedBox(
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: const TextSpan(
+                        text: 'Xin chào bạn, Chào mừng \n',
+                        style: TextStyle(
+                          fontFamily: 'Minh',
+                          fontSize: 30,
+                          fontWeight: FontWeight.w900,
+                          color: Color(0xFFFFECCC),
+                          height: 1.3,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: 'Bạn đã trở lại',
+                            style: TextStyle(
+                                fontFamily: 'Minh',
+                                fontSize: 30,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ]),
                   ),
                 ),
               ),
-              Flexible(
-                flex: 1,
-                fit: FlexFit.tight,
-                child: Container(
-                  // color: Colors.red,
-                  child: FractionallySizedBox(
-                    widthFactor: 0.8,
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: FittedBox(
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          'Hãy ấn bắt đầu để tiến hành đăng nhập\nNếu chưa có tài khoản '
-                          'hãy nhanh tay ấn đăng ký',
-                          style: TextStyle(
-                              height: 1.5,
-                              fontFamily: 'Minh',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w300,
-                              color: Color(0xFFEBEAEC)),
-                        ),
+            ),
+            Flexible(
+              flex: 1,
+              fit: FlexFit.tight,
+              child: Container(
+                // color: Colors.red,
+                child: FractionallySizedBox(
+                  widthFactor: 0.8,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: FittedBox(
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        'Hãy ấn bắt đầu để tiến hành đăng nhập\nNếu chưa có tài khoản '
+                        'hãy nhanh tay ấn đăng ký',
+                        style: TextStyle(
+                            height: 1.5,
+                            fontFamily: 'Minh',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w300,
+                            color: Color(0xFFEBEAEC)),
                       ),
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

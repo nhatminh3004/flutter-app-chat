@@ -60,6 +60,9 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
           ),
           WelcomeScreenPage(
             backPressed: () {
+              _pageController.jumpToPage(2);
+            },
+            getStartedPressed: () {
               _pageController.jumpToPage(0);
             },
           )
